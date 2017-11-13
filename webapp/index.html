@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AirBnb Data Analysis</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      font: 20px Montserrat, sans-serif;
+      line-height: 1.8;
+      color: #f5f6f7;
+  }
+  p {font-size: 16px;}
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+      background-color: #1abc9c; /* Green */
+      color: #ffffff;
+  }
+  .bg-2 { 
+      background-color: #474e5d; /* Dark Blue */
+      color: #ffffff;
+  }
+  .bg-3 { 
+      background-color: #ffffff; /* White */
+      color: #555555;
+  }
+  .bg-4 { 
+      background-color: #2f2f2f; /* Black Gray */
+      color: #fff;
+  }
+  .container-fluid {
+      padding-top: 70px;
+      padding-bottom: 70px;
+  }
+  .navbar {
+      padding-top: 2px;
+      opacity: 0.75;   
+      padding-bottom: 2px;
+      border: 0;
+      border-radius: 0;
+      margin-bottom: 0;
+      font-size: 10px;
+      letter-spacing: 2px;
+
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+  </style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+      <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#myPage">AirBNB data Analysis (San Francisco)</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-centre">
+        <li><a href="#visualizations">VISUALIZATIONS</a></li>
+        <li><a href="#price estimation/optimization">PRICE OPTIMIZING AND ESTIMATING</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- First Container (map and pie chart)-->
+<div class="container-fluid bg-1 text-center" id = "visualizations">
+  <div class="row">
+    <div class="col-sm-6">
+        <h3 class="margin" style = "margin-top: 100px;">Map of Data (approximate)</h3>
+        <div id="googleMap" style="width:500px;height:500px;margin: 0 auto 0 auto;"></div>
+     </div>
+     <div class="col-sm-6">
+         <h3 class="margin" style = "margin-top: 100px;">Buisnesses and independant hosts 
+            (scroll over for more information)</h3>
+          <div style="width:400px;height:400px;margin: 0 auto 0 auto; margin-top: 30px;">
+            <canvas id="pieChart" ></canvas>
+          </div>
+    </div>
+  </div>
+</div>
+
+<!-- Second Container (bar graph)-->
+<div class="container-fluid bg-2 text-center" style = "height:700px;">
+  <h3 class="margin">Listings in each neigbourhood (scroll over each bar for more information)</h3>
+  <div style="width:1100px;height:400px;margin: 0 auto 0 auto;">
+    <canvas id="barChart"></canvas>
+  </div>
+</div>
+
+<!-- Third Container (Grid) (price estimator and revenue predictor)-->
+<div class="container-fluid bg-3 text-center" id="price estimation/optimization">    
+  <h3 class="margin" style = "margin-top: 100px;" >Optimization/Estimation </h3><br>
+  <div class="row">
+    <div class="col-sm-6" style = "border-right: 1px solid #ccc;" >
+      <h3 class="margin">Weekly earnings estimator</h3><br>
+      <p>Enter the latitude and longitude of a property to estimate the weekly earnings. 
+        (Note: please give valid co-ordinates for a property in San Francisco for valid results.)</p>
+      <div class="form-group">
+        <label for="usr">Enter latitude:</label>
+        <input type="text" class="form-control" id="latitude" style = "width:590px;">
+        <label for="usr">Enter longitude:</label>
+        <input type="text" class="form-control" id="longitude" style = "width:590px;">
+        <button type="button" class="btn" onclick="predict()"> Compute</button>
+        <h2 id= "prediction result"></h2>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <h3 class="margin">Ideal Price Estimator</h3><br>
+      <p>Enter the latitude and longitude of a property to estimate the ideal price for bookings or revenue. 
+        (Note: please give valid co-ordinates for a property in San Francisco for valid results.)</p>
+      <label for="usr">Enter latitude:</label>
+      <input type="text" class="form-control" id="latitude1" >
+      <label for="usr">Enter longitude:</label>
+      <input type="text" class="form-control" id="longitude1">
+      <label for="sel1">Optimize:</label>
+      <select class="form-control" id="booking/revenue">
+        <option>bookings</option>
+        <option>revenue</option>
+      </select>
+      <button type="button" class="btn" onclick="optimize()"> Compute</button>
+      <h2 id= "optimization result"></h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+  <p>Bootstrap Theme Made By <a href="https://www.w3schools.com">www.w3schools.com</a></p> 
+  <p>Website designed by Aditi Hebbar</p> 
+</footer>
+
+<script type="text/javascript" src="mapData.js"></script>
+<script type="text/javascript" src="neighbourhoodsData.js"></script>
+<script type="text/javascript" src="buisnessesData.js"></script>
+<script type="text/javascript" src ="optimizerData.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+<script type="text/javascript"src="graphs.js"></script> 
+<script type="text/javascript"src="optimize.js"></script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQeDeA57DYAjeKbhNddaSAl1it4bhFIns&callback=myMap"></script>
+
+</body>
+</html>

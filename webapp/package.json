@@ -1,0 +1,22 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "im scared",
+  "main": "buisnessesData.js",
+  "dependencies": {
+    "ml-regression-multivariate-linear": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "d"
+  },
+  "keywords": [
+    "d"
+  ],
+  "author": "d",
+  "license": "ISC"
+}
